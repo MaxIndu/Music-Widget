@@ -1,4 +1,4 @@
 # Music-Widget
 This is a draggable funtionaning music widget written using Javascript for Electron Desktop application.
 
-![alt tag](https://raw.githubusercontent.com/MaxIndu/Music-Widget/master/Music Widget.png)
+![Music Widget](https://github.com/MaxIndu/Music-Widget/blob/master/Music%20Widget)
