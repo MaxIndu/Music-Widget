@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Music Widget</title>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <audio src="sample.mp3" id="player"></audio>
+    <section class="music-player" id="draggable">
+    <header class="music-player--banner"></header>
+    <main class="music-player--main">
+        <div class="music-player--progress">
+        <!-- Progressbar -->
+            <div class="container">
+                <div class="progress">
+                    <div class="progress-bar">
+                        <div class="progress-shadow"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <progress id="progress" class="progress--progress-bar" value="0" max="100"></progress> -->
+            <div id="progressTime" class="progress--time">0s</div>
+            <div id="progressLength" class="progress--time progress--time__end">0s</div>
+        </div>
+
+        <div class="music-player--controls">
+            <i id="playButton" class="fa fa-play controls--play-button"></i>
+            <div class="song-info">
+            <div class="song-info--title">Is This Love</div>
+            <div class="song-info--artist">Bob Marley</div>
+        </div>
+
+        <div class="controls--actions">
+            <i class="fa fa-retweet actions--repeat"></i>
+            <i class="fa fa-backward actions--back"></i>
+            <i class="fa fa-forward actions--forward"></i>
+        </div>
+    </div>
+  </main>
+</section>
+</body>
+<script src="http://code.jquery.com/jquery-1.10.2.js" onload="window.$ = window.jQuery = module.exports;" ></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="id3.min.js"></script>
+<script src="script.js"></script>
+<script>
+$(document).ready(function() {
+
+    var song = 'sample.mp3';
+
+    $('.controls--play-button').click(function(){
+        var $this = $(this);
+        if ($this.hasClass('fa-play')){
+            $('#playButton').removeClass('fa-play').addClass('fa-pause');
+            document.getElementById('player').play();
+        }else{
+            $('#playButton').removeClass('fa-pause').addClass('fa-play');
+            document.getElementById('player').pause();
+        }
+    });
+
+    var player = document.getElementById('player');  
+    var duration = player.duration;
+    $('#progressLength').html(Math.round(duration)+"s");
+    console.log(duration);
+    var progressBarWidth = $('.container').width();
+    console.log(progressBarWidth);
+
+    player.addEventListener("timeupdate", function() {
+        var currentTime = player.currentTime;
+
+        $('#progressTime').html(Math.round(currentTime)+"s");
+        // $('#progress').val((currentTime/duration)*100);
+        $('.progress').css('width',(currentTime/duration)*progressBarWidth);
+
+        var lengthOfBar = $('.progress').css('width');
+        // console.log(lengthOfBar);
+
+        if($('.progress').css('width') == progressBarWidth+"px"){
+             // $('.progress').css('width','0');
+             $('.progress').removeClass('.progress-bar').addClass('.progress-bar-reverse');
+             $('#playButton').removeClass('fa-pause').addClass('fa-play');
+        }
+    });
+
+    // Change Album art according to the song
+    
+
+});
+</script>
+</html>
